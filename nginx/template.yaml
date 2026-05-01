@@ -1,0 +1,48 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: nginx-template
+  title: Nginx Deployment Template
+  description: Deploys an Nginx instance via ArgoCD
+spec:
+  owner: platform-team
+  type: service
+
+  parameters:
+    - title: Provide Deployment Details
+      required:
+        - name
+        - namespace
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Unique name for the deployment
+        namespace:
+          title: Kubernetes Namespace
+          type: string
+          default: default
+
+  steps:
+    - id: fetch-base
+      name: Fetch Skeleton
+      action: fetch:template
+      input:
+        url: .skeleton/kubernetes/
+        values:
+          name: ${{ parameters.name }}
+
+    - id: publish
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        allowedHosts: ['github.com']
+        description: 'Nginx deployment for ${{ parameters.name }}'
+        repoUrl: 'github.com?owner=your-org&repo=${{ parameters.name }}'
+
+    - id: register
+      name: Register in Backstage
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: '/catalog-info.yaml'
