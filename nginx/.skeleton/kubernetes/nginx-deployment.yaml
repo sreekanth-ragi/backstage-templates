@@ -2,19 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: ${{ values.name }}
   labels:
-    backstage.io/kubernetes-id: nginx-service # This label is critical
+    app: ${{ values.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: ${{ values.name }}
   template:
     metadata:
       labels:
-        app: nginx
-        backstage.io/kubernetes-id: nginx-service
+        app: ${{ values.name }}
     spec:
       containers:
       - name: nginx
@@ -25,12 +24,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: ${{ values.name }}
   labels:
-    backstage.io/kubernetes-id: nginx-service
+    app: ${{ values.name }}
 spec:
   selector:
-    app: nginx
+    app: ${{ values.name }}
   ports:
     - protocol: TCP
       port: 80
