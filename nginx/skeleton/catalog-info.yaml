@@ -1,7 +1,10 @@
-- id: register
-      name: Register in Backstage
-      action: catalog:register
-      input:
-        # This points Backstage to the newly created catalog-info.yaml in the NEW repo
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
-        catalogInfoPath: '/catalog-info.yaml'
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: nginx-test
+  annotations:
+    argocd/app-name: nginx-test
+spec:
+  type: service
+  lifecycle: experimental
+  owner: group:default/backend-admin
