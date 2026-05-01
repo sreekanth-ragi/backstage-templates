@@ -28,7 +28,7 @@ spec:
       name: Fetch Skeleton
       action: fetch:template
       input:
-        url: .skeleton/kubernetes/
+        url: ./skeleton/kubernetes
         values:
           name: ${{ parameters.name }}
 
