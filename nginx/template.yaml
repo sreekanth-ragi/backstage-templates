@@ -5,7 +5,7 @@ metadata:
   title: Nginx Deployment Template
   description: Deploys an Nginx instance via ArgoCD
 spec:
-  owner: ragisreekanth@example.com
+  owner: group:default/backend-admin
   type: service
 
   parameters:
