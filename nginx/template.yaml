@@ -40,4 +40,4 @@ spec:
         projectName: default
         namespace: ${{ parameters.namespace }}
         repoUrl: "https://github.com{{ parameters.repoName }}"
-        path: "default/"
+        path: "kubernetes/"
